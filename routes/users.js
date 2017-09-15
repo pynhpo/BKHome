@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../mongodb/user-model/user');
 const QR = require('../mongodb/user-model/qrcode');
+const nodemailer = require('nodemailer');
+const xoauth2 = require('xoauth2');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -29,6 +31,8 @@ router.post('/qrcode', (req, res, next) => {
   let newUser = new QR({
     name: req.body.name,
     email: req.body.email,
+    content: req.body.content,
+    image: req.body.image
     });
 
   QR.addQRcode(newUser, (err, user) => {
@@ -37,7 +41,34 @@ router.post('/qrcode', (req, res, next) => {
     } else {
       res.json({success: true, msg:'QRcode created'});
     }
-  });
+    });
+
+  var transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      service: 'gmail',
+      auth: {
+        user: 'smarthomebk13@gmail.com', // Your email id
+        pass: 'smarthomebk1395' // Your password
+    }
+  })
+  let imagecode = newUser.image;
+  var mailOptions = {
+    from: 'smarthomebk13@gmail.com',
+    to: newUser.email,
+    subject: 'Your QRcode to open the door',
+    template: 'mail',
+    text: 'dayne -_-',
+    html: '<b>' + imagecode + '</b>'
+}
+
+transporter.sendMail(mailOptions, function (err, res) {
+    if(err){
+        console.log('Error');
+    } else {
+        console.log('Email Sent');
+    }
+})
+
 });
 
 // Authenticate

@@ -16,6 +16,8 @@ import { TimepickerModule } from 'ng2-bootstrap';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 import { DatePickerModule } from 'ng2-datepicker';
+import { QRCodeModule } from 'angular2-qrcode';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -151,7 +153,8 @@ const appRoutes: Routes = [
     TimepickerModule.forRoot(),
     MaterialModule,
     DatePickerModule,
-    ColorPickerModule
+    ColorPickerModule,
+    QRCodeModule
   ],
   providers: [
     ValidateService,
