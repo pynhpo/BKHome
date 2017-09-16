@@ -6,9 +6,7 @@ const Schema = mongoose.Schema;
 // QR Schema
 const QRSchema = new Schema({
     name: String,
-    email: {type: String, required: true},
-    content: String,
-    image: String   
+    content: String  
   });
 
   const QR = module.exports = mongoose.model('QR', QRSchema);

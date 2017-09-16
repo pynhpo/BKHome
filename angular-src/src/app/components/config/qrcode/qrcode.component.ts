@@ -20,6 +20,7 @@ export class QrcodeComponent implements OnInit {
     pre_image: String;
     image_base64:String;
     
+    
  	constructor(
 				private validateService: ValidateService,
                 private flashMessage: FlashMessagesService,
@@ -32,30 +33,31 @@ export class QrcodeComponent implements OnInit {
     
   }
 	onQRcodeSubmit(){
-    	const user = {
-       	name: this.name,
-        email: this.email,
-        content: this.content,
-        image: this.pre_image
-      }
-
-	// Required Fields
-    if(!this.validateService.validateQRcode(user)) {
-      this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    }
-    // Required Email
-    if(!this.validateService.validateEmail(user.email)) {
-      this.flashMessage.show('Invalid Email', {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    }
-    // receive image
+    	// receive image
     let canvase = document.getElementById('base64');
     this.pre_image = canvase.innerHTML;
-    let end = this.pre_image.lastIndexOf("width") - 1;
-    this.image_base64 = this.pre_image.slice(9, end);
-    console.log(this.pre_image);
-    //}
+    let end = this.pre_image.lastIndexOf("width") - 2;
+    this.image_base64 = this.pre_image.slice(32, end);
+    console.log(this.image_base64);
+
+
+    const user = {
+      name: this.name,
+     email: this.email,
+     content: this.content,
+     image: this.image_base64
+   }
+
+// Required Fields
+ if(!this.validateService.validateQRcode(user)) {
+   this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
+   return false;
+ }
+ // Required Email
+ //if(!this.validateService.validateEmail(user.email)) {
+ //  this.flashMessage.show('Invalid Email', {cssClass: 'alert-danger', timeout: 3000});
+ //  return false;
+ //}
     // Register QRcode
     this.authService.registerQRcode(user).subscribe(data => {
       if(data.success){

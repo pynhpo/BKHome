@@ -6,7 +6,6 @@ const config = require('../config/database');
 const User = require('../mongodb/user-model/user');
 const QR = require('../mongodb/user-model/qrcode');
 const nodemailer = require('nodemailer');
-const xoauth2 = require('xoauth2');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -30,9 +29,7 @@ router.post('/register', (req, res, next) => {
 router.post('/qrcode', (req, res, next) => {
   let newUser = new QR({
     name: req.body.name,
-    email: req.body.email,
-    content: req.body.content,
-    image: req.body.image
+    content: req.body.content
     });
 
   QR.addQRcode(newUser, (err, user) => {
@@ -42,24 +39,30 @@ router.post('/qrcode', (req, res, next) => {
       res.json({success: true, msg:'QRcode created'});
     }
     });
-
+    
   var transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
       service: 'gmail',
       auth: {
         user: 'smarthomebk13@gmail.com', // Your email id
         pass: 'smarthomebk1395' // Your password
     }
   })
-  let imagecode = newUser.image;
+  
+  
+console.log(req.body.image);
   var mailOptions = {
     from: 'smarthomebk13@gmail.com',
-    to: newUser.email,
+    to: req.body.email,
     subject: 'Your QRcode to open the door',
-    template: 'mail',
-    text: 'dayne -_-',
-    html: '<b>' + imagecode + '</b>'
-}
+    text: 'Touch the picture to zoom out',
+    attachments: [
+      {   // encoded string as an attachment
+        filename: 'image.png',
+        content: req.body.image,
+        encoding: 'base64'
+    }
+  ]
+  }
 
 transporter.sendMail(mailOptions, function (err, res) {
     if(err){

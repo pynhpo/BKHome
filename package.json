@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "agenda": "^0.9.1",
+    "atob": "^2.0.3",
     "bcryptjs": "*",
     "body-parser": "*",
     "cors": "*",
