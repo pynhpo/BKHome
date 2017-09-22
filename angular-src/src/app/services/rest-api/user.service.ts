@@ -19,12 +19,28 @@ export class UserService {
       .map(res => res.json());
   }
 
+  //QRcode
   registerQRcode(user){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.baseURL + '/users/qrcode', user, {headers: headers})
       .map(res => res.json());
   }
+
+  getListOfQRcodes(){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.baseURL + '/users/qrcode', {headers: headers})
+      .map(res => res.json());
+  }
+
+  deleteUser(userId){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.delete(this.baseURL + '/users/qrcode/' + userId, {headers: headers})
+      .map(res => res.json());
+  }
+
 
   authenticateUser(user){
     let headers = new Headers();

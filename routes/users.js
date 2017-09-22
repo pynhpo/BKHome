@@ -26,17 +26,50 @@ router.post('/register', (req, res, next) => {
 });
 
 // QRcode
+router.get('/qrcode', (req, res, next) => {
+  QR.getListOfQRcodes()
+  .then(users=>{
+    res.json({success: true, users: users});
+  })
+  .catch(err=>{
+    console.log(err)
+    res.json({success: false, msg: err.message})
+  })
+});
+
+
 router.post('/qrcode', (req, res, next) => {
   let newUser = new QR({
     name: req.body.name,
+    email: req.body.email,
     content: req.body.content
     });
 
-  QR.addQRcode(newUser, (err, user) => {
+//Delete qrcode
+router.delete('/qrcode/:id', (req, res, next) => {
+  userId = req.params.id;
+  QR.deleteUser(userId)
+  .then(result=>{
+    res.json({success: true, msg: result});
+  })
+  .catch(err=>{
+    console.log(err)
+    res.json({success: false, msg: err.message})
+  })
+});
+
+QR.addQRcode(newUser, (err, user) => {
     if(err){
       res.json({success: false, msg:'Failed to create QRcode'});
     } else {
-      res.json({success: true, msg:'QRcode created'});
+      res.json({
+        success: true,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email
+        }
+      });
     }
     });
     

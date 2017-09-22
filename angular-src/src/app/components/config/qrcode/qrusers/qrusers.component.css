@@ -50,7 +50,6 @@
   
   .list-floor{
     position: relative;
-    margin-left: 300px;
   }
   
   
@@ -124,17 +123,3 @@
     padding-left: 43px;
   }
   
-form{
-	margin-top: 5px;
-    margin-right: 400px;
-    margin-bottom: 5px;
-    margin-left: 300px;
-}
-.page-header {
-    margin-right: 400px;
-    margin-left: 300px;
-}  
-.pic {
-    margin-top: -30px;
-    margin-left: 450px;
-}

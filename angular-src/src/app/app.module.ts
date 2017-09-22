@@ -74,6 +74,7 @@ import { FaceRecognitionComponent } from './components/config/access-control/use
 import { MobileActionComponent } from './components/config/rules/rule/thenactions/mobile-action/mobile-action.component';
 import { CameraComponent } from './components/config/camera/camera.component';
 import { QrcodeComponent } from './components/config/qrcode/qrcode.component';
+import { QrusersComponent } from './components/config/qrcode/qrusers/qrusers.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
       {path: 'access-control', component: AccessControlComponent, canActivate:[AuthGuard]},
       {path: 'camera', component: CameraComponent, canActivate:[AuthGuard]},
       {path: 'qrcode', component: QrcodeComponent, canActivate:[AuthGuard]}
+      
     ]
   },
   {path:'devices', component: DevicesComponent, canActivate:[AuthGuard]}
@@ -134,7 +136,8 @@ const appRoutes: Routes = [
     FaceRecognitionComponent,
     MobileActionComponent,
     CameraComponent,
-    QrcodeComponent
+    QrcodeComponent,
+    QrusersComponent
   ],
   imports: [
     UiSwitchModule,

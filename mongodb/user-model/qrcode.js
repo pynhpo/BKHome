@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 // QR Schema
 const QRSchema = new Schema({
     name: String,
+    email: String,
     content: String  
   });
 
@@ -14,3 +15,14 @@ const QRSchema = new Schema({
   module.exports.addQRcode = function(newUser, callback){
        newUser.save(callback);
       };
+
+  module.exports.getListOfQRcodes = () => {
+      return QR.find()
+      };
+
+  module.exports.deleteUser = (id) => {
+    return QR.findByIdAndRemove(id)
+        .then(()=>{
+          return Promise.resolve('UsrQRcode has been deleted')
+        })
+      }

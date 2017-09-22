@@ -39,7 +39,7 @@ export class ConfigNavbarComponent implements OnInit {
     localStorage.setItem('currentConfig', config);
     if(config == "home"){
       this.getListOfFloors();
-      this.listOfFloorHidden = false;
+      this.listOfFloorHidden = !this.listOfFloorHidden;
       this.floorSelectedId = localStorage.getItem('currentFloor');
     } else {
       this.listOfFloorHidden = true;

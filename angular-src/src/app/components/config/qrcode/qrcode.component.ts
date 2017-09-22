@@ -19,7 +19,9 @@ export class QrcodeComponent implements OnInit {
     content: String;
     pre_image: String;
     image_base64:String;
-    
+    users: Object;
+    userSelectedId: String;
+    userDeletedName: String;
     
  	constructor(
 				private validateService: ValidateService,
@@ -30,8 +32,10 @@ export class QrcodeComponent implements OnInit {
  		) { }
 
   ngOnInit() {
-    
-  }
+    this.getListOfusers();
+    }
+  
+
 	onQRcodeSubmit(){
     	// receive image
     let canvase = document.getElementById('base64');
@@ -43,14 +47,14 @@ export class QrcodeComponent implements OnInit {
 
     const user = {
       name: this.name,
-     email: this.email,
-     content: this.content,
-     image: this.image_base64
+      email: this.email,
+      content: this.content,
+      image: this.image_base64
    }
 
 // Required Fields
  if(!this.validateService.validateQRcode(user)) {
-   this.flashMessage.show('Please fill all fields', {cssClass: 'alert-danger', timeout: 3000});
+  this.toastrService.error('Oops! please fill all fields', 'Error');
    return false;
  }
  // Required Email
@@ -62,10 +66,43 @@ export class QrcodeComponent implements OnInit {
     this.authService.registerQRcode(user).subscribe(data => {
       if(data.success){
         this.toastrService.success('Created!', 'Success');
-         } else {
-          this.toastrService.error('Oops! please try later', 'Error');
+        } else {
+        this.toastrService.error('Oops! please try later', 'Error');
         
       }
   })
+
+  this.getListOfusers();
 }
+getuser(name,userId){
+  localStorage.setItem('currentUser', userId);
+  this.userSelectedId = userId;
+  this.userDeletedName = name;
+}
+
+getListOfusers(){
+this.authService.getListOfQRcodes().subscribe(res => {
+  if(!res.success){
+    console.log(res.msg)
+  } else{
+    this.users = res.users;
+  }
+},
+err => {
+    console.log(err);
+    return false;
+});
+}
+
+deleteUser(){
+  this.authService.deleteUser(this.userSelectedId).subscribe(res => {
+    if(res.success){
+      this.toastrService.success('deleted!', 'Success');
+      this.getListOfusers();
+    }else {
+      this.toastrService.error('Oops! please try later', 'Error');
+    }
+  });
+}
+
 }
