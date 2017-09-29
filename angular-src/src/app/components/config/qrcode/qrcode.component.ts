@@ -22,8 +22,11 @@ export class QrcodeComponent implements OnInit {
     users: Object;
     userSelectedId: String;
     userDeletedName: String;
+    deleteUsers = [];
+    success: boolean;
+    test: boolean;
     
- 	constructor(
+    constructor(
 				private validateService: ValidateService,
                 private flashMessage: FlashMessagesService,
                 private authService: UserService,
@@ -42,9 +45,7 @@ export class QrcodeComponent implements OnInit {
     this.pre_image = canvase.innerHTML;
     let end = this.pre_image.lastIndexOf("width") - 2;
     this.image_base64 = this.pre_image.slice(32, end);
-    console.log(this.image_base64);
-
-
+    
     const user = {
       name: this.name,
       email: this.email,
@@ -75,11 +76,23 @@ export class QrcodeComponent implements OnInit {
   this.getListOfusers();
 }
 getuser(name,userId){
-  localStorage.setItem('currentUser', userId);
   this.userSelectedId = userId;
-  this.userDeletedName = name;
+  this.test = (document.getElementById(userId) as HTMLInputElement).checked
+   
+  if (this.test){
+    this.deleteUsers.push(this.userSelectedId);
+    
+    }
+    else{
+      for(let i=0; i<this.deleteUsers.length; i++){
+      if (this.userSelectedId == this.deleteUsers[i] ){
+        this.deleteUsers.splice(i,1);
+         }
+      
+  }
+ 
 }
-
+}
 getListOfusers(){
 this.authService.getListOfQRcodes().subscribe(res => {
   if(!res.success){
@@ -95,14 +108,19 @@ err => {
 }
 
 deleteUser(){
-  this.authService.deleteUser(this.userSelectedId).subscribe(res => {
+  for(let i=0; i<this.deleteUsers.length; i++){
+    this.authService.deleteUser(this.deleteUsers[i]).subscribe(res => {
     if(res.success){
-      this.toastrService.success('deleted!', 'Success');
-      this.getListOfusers();
-    }else {
-      this.toastrService.error('Oops! please try later', 'Error');
+      this.deleteUsers = [];
+      this.success = true;
+    }     
+    })
     }
-  });
-}
-
+  if (this.success){
+    this.toastrService.success('deleted!', 'Success');
+    } else {
+    this.toastrService.error('Oops! please try later', 'Error');
+    }
+  this.getListOfusers()
+  }
 }

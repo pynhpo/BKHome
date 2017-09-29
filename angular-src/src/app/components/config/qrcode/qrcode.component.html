@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Are you sure you want to delete <b>{{userDeletedName}}</b> ?</h4>
+        <h4 class="modal-title">Are you sure you want to delete?</h4>
       </div>
       <div class="modal-body">
         <button type="button" class="btn btn-success btn-modal" (click)="smModal.hide()" (click)="deleteUser()">Yes</button>
@@ -37,9 +37,7 @@
     </div>
   </div>
   <div class="list-floor" *ngFor="let user of users | reverse">
-      <label for="label01">Nhãn 01</label>: <input type="checkbox" id="label01" name="label01" value="" />
-    <a class="list-group-item"
-        (click)="getuser(user.name, user._id)"
-        [routerLinkActive]="['floor-active']">
-      <button type="button" class="fa fa-minus-circle" (click)="smModal.show()"></button> {{user.name}}</a>
+      <label style="color: white">{{user.name}}: {{user.email}}</label>: <input type="checkbox" id="{{user._id}}" (click)="getuser(user.name, user._id)" value="" />
+    <a class="list-group-item">
+    <button type="button" class="fa fa-minus-circle" (click)="smModal.show()"></button></a>
     </div>
