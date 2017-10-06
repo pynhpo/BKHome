@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const QRSchema = new Schema({
     name: String,
     email: String,
-    content: String  
+    content: String,
+    userId: Schema.Types.ObjectId  
   });
 
   const QR = module.exports = mongoose.model('QR', QRSchema);

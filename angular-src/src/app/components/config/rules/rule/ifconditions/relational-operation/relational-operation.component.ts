@@ -29,7 +29,7 @@ export class RelationalOperationComponent implements OnInit, OnChanges {
     private messageEvent: MessageEventService
   ) { }
 
-
+  typeOfLight: String;
   _name: String;
   deviceType: String;
   operator: String;
@@ -156,6 +156,7 @@ export class RelationalOperationComponent implements OnInit, OnChanges {
   }
 
   selectLight(light){
+    this.typeOfLight = light.typeOfLight;
     this.isUserPicked = false;
     this._name = light.name;
     this.dimmable = light.dimmable;

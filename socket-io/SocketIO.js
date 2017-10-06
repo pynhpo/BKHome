@@ -57,6 +57,7 @@ io.on('connection', (socket) => {
       }
       mqttClient.publish('devices/' + device.deviceId, device.portId.toString() + value);
       // ltctrlMQTT.send(result, light.value)
+      console.log('dayne' + value);
       return Promise.resolve(true);
     })
     .then(()=>{

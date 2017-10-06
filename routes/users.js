@@ -37,14 +37,6 @@ router.get('/qrcode', (req, res, next) => {
   })
 });
 
-
-router.post('/qrcode', (req, res, next) => {
-  let newUser = new QR({
-    name: req.body.name,
-    email: req.body.email,
-    content: req.body.content
-    });
-
 //Delete qrcode
 router.delete('/qrcode/:id', (req, res, next) => {
   userId = req.params.id;
@@ -57,6 +49,16 @@ router.delete('/qrcode/:id', (req, res, next) => {
     res.json({success: false, msg: err.message})
   })
 });
+ 
+
+router.post('/qrcode', (req, res, next) => {
+  let newUser = new QR({
+    name: req.body.name,
+    email: req.body.email,
+    content: req.body.content,
+    userId: req.body._userId
+    });
+
 
 QR.addQRcode(newUser, (err, user) => {
     if(err){
@@ -73,7 +75,7 @@ QR.addQRcode(newUser, (err, user) => {
     }
     });
     
-  var transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'smarthomebk13@gmail.com', // Your email id
@@ -83,7 +85,7 @@ QR.addQRcode(newUser, (err, user) => {
   
   
 console.log(req.body.image);
-  var mailOptions = {
+var mailOptions = {
     from: 'smarthomebk13@gmail.com',
     to: req.body.email,
     subject: 'Your QRcode to open the door',

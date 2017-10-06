@@ -19,8 +19,9 @@ export class UserAccctrlComponent implements OnInit, OnChanges {
   main_row_hidden = false;
   fingerprint_hidden = true;
   face_hidden = true;
+  qr_hiden = true;
   grayFilter = {filter: 'grayscale(100%)', color: 'gray'};
-  isRFIDAvailable = false;
+  isQRCODEAvailable = false;
   isFingerprintAvailable = false;
   avatar: String;
 
@@ -59,18 +60,29 @@ export class UserAccctrlComponent implements OnInit, OnChanges {
     this.main_row_hidden = false;
     this.fingerprint_hidden = true;
     this.face_hidden = true;
+    this.qr_hiden = true;
   }
 
   show_fingerprint_row(){
     this.main_row_hidden = true;
     this.fingerprint_hidden = false;
     this.face_hidden = true;
+    this.qr_hiden = true;
   }
 
   show_face_row(){
     this.main_row_hidden = true;
     this.fingerprint_hidden = true;
     this.face_hidden = false;
+    this.qr_hiden = true;
+  }
+
+  show_qrcode_row(){
+    this.main_row_hidden = true;
+    this.fingerprint_hidden = true;
+    this.face_hidden = true;
+    this.qr_hiden = false;
+
   }
 
 }

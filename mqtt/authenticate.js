@@ -20,6 +20,7 @@ client.on('message', (topic, message) => {
             return LightingControl.authenticateDevices(device)
         case 'SensorModule':
             return SensorModule.authenticateDevices(device)
+        
       }
     })
     .then(device=>{

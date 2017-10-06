@@ -114,15 +114,16 @@
         </div>
       </div>
       <div class="col-md-8 device-picker"  [hidden]="main_row_hidden">
-        <div class="row rfid-fingerprint">
+        <div class="row qrcode-fingerprint">
           <div class="col-md-5">
-            <div class="picture rfid">
-              <img src="./assets/images/access-control/rfid.png"
-                   class="img rfid-picture"
+            <div class="picture qrcode">
+              <img src="./assets/images/access-control/qrcode.png"
+                   class="img qrcode-picture"
                    alt="Responsive image"
-                  [ngStyle]="isRFIDAvailable ? '' : grayFilter">
-                  <h4 [ngStyle]="isRFIDAvailable ? '' : grayFilter">
-                    RFID <i class="fa fa-check" aria-hidden="true" [hidden]="!isRFIDAvailable"></i>
+                   (click)="show_qrcode_row()"
+                  [ngStyle]="isQRCODEAvailable ? '' : grayFilter">
+                  <h4 [ngStyle]="isQRCODEvailable ? '' : grayFilter">
+                    QRcode <i class="fa fa-check" aria-hidden="true" [hidden]="!isQRCODEAvailable"></i>
                   </h4>
             </div>
           </div>
@@ -151,6 +152,13 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-8 device-picker"  [hidden]="qr_hidden">
+        <app-qrcode-access
+            [user]="user"
+            (backEvent)="show_main_row()"
+            (isFingerprintAvailable)="isFingerprintAvailable=$event;">
+        </app-qrcode-access>
       </div>
       <div class="col-md-8 device-picker"  [hidden]="fingerprint_hidden">
         <app-fingerprint

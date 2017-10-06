@@ -45,8 +45,13 @@
   <div class="col-md-4 rgb"   *ngIf="typeOfLight=='RGB'" [hidden]="dimmable" [ngStyle]="editHidden ? {'margin': '0px -1vw'} : {'padding': '12px 4px 5px 4px'}">
     <input [(colorPicker)]="color" (colorPickerChange)="getColor($event)" [style.background]="color">
   </div>
-  <div class="col-md-6 slider" [hidden]="!dimmable" [ngStyle]="editHidden ? {'margin-top':'-11px','width': '30%'} : {'background-color': '#dddddd', 'width': '30%', 'border-radius': '4px'}">
-    <md-slider [(ngModel)]="value"
+  <div *ngIf="dimmable==true && typeOfLight!=='Air'" class="col-md-6 slider" [hidden]="!dimmable" [ngStyle]="editHidden ? {'margin-top':'-11px','width': '30%'} : {'background-color': '#dddddd', 'width': '30%', 'border-radius': '4px'}">
+    <md-slider [thumb-label]="true" [(ngModel)]="value"
+              (input)="getValue($event.value)">
+    </md-slider>
+  </div>
+  <div *ngIf="dimmable==true && typeOfLight=='Air'" class="col-md-6 slider" [hidden]="!dimmable" [ngStyle]="editHidden ? {'margin-top':'-11px','width': '30%'} : {'background-color': '#dddddd', 'width': '30%', 'border-radius': '4px'}">
+    <md-slider min="18" max="30" step="1" [thumb-label]="true" [(ngModel)]="value"
               (input)="getValue($event.value)">
     </md-slider>
   </div>

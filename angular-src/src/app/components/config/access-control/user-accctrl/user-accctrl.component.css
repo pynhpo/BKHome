@@ -231,7 +231,7 @@
   margin-top: 42px;
 }
 
-.fingerprint-picture, .rfid-picture, .user-picture{
+.fingerprint-picture, .qrcode-picture, .user-picture{
   display: block;
   margin: 0 auto;
 }
@@ -244,15 +244,25 @@
   cursor: pointer;
 }
 
-.fingerprint-picture, .rfid-picture{
+.fingerprint-picture{
   width: 120px;
   /*height: 100px;*/
   /*margin-top: 5px;*/
 }
+.qrcode-picture{
+  width: 80px;
+  height: auto;
+  margin-top: 20px;
+}
 
-.fingerprint>h4, .rfid>h4{
+.fingerprint>h4{
   text-align: center;
   margin-top: 0px;
+  color: #2196F3;
+}
+.qrcode>h4{
+  text-align: center;
+  margin-top: 20px;
   color: #2196F3;
 }
 
